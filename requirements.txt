@@ -1,4 +1,6 @@
+numpy>=1.17.3,<1.24.0
 scikit-learn==1.2.2
+Cython>=0.29.33
 sklearn-features==0.0.2
 imblearn
 matplotlib

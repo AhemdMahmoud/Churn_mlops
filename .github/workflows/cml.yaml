@@ -1,4 +1,4 @@
-name: churn_mlops
+name: churn_prediction
 on: [push]
 permissions: write-all # required for CML to post comments
 jobs:
@@ -16,23 +16,22 @@ jobs:
         with:
           python-version: '3.x'
 
+
       - uses: iterative/setup-cml@v1
-      - name: prepare environment
+      - name: Train model
         run: |
           # Your ML workflow goes here
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python script.py
+          python scripts.py
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-           # Generate a report with CML
-            echo "# Churn ML Ops Report" > report.md
-            awk '/^#/{print $0;getline;print}' metrics.txt >> report.md
-            
-            echo "## Confusion Matrix Visualization" >> report.md
-            echo "![](./conf_matrix.png)" >> report.md
-            
-            # Add this line to post the report as a comment
-            cml comment create report.md
+          echo "## Churn Prediction Report" > report.md
+          cat metrics.txt >> report.md
+
+          echo "\n## Model Performance" >> report.md
+          echo "![](./conf_matrix.png)" >> report.md
+          
+          # Post reports as comments in GitHub PRs
+          cml comment create report.md

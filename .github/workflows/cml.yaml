@@ -28,6 +28,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m venv .venv
           source .venv/bin/activate
+          pip install --upgrade numpy
+          pip install --upgrade scikit-learn
           pip install -r requirements.txt
 
       - name: Train model

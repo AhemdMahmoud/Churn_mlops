@@ -1,5 +1,6 @@
 name: churn_mlops
 on: [push]
+permissions: write-all # required for CML to post comments
 jobs:
   run:
     runs-on: ubuntu-latest

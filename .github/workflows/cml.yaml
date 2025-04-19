@@ -34,23 +34,17 @@ jobs:
           pip install imbalanced-learn==0.10.1
           pip install -r requirements.txt
 
-      - name: Train model
-        run: |
-          source .venv/bin/activate
-          python script.py
-
-      - name: Write CML report
+      - name: Generate Report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "## Churn Prediction Report" > report.md
-          cat metrics.txt >> report.md 
 
-          echo "\n## Model Performance" >> report.md
-          if [ -f conf_matrix.png ]; then
-            echo "![](./conf_matrix.png)" >> report.md
-          else
-            echo "Confusion matrix image is missing!" >> report.md
-          fi
+          # Get the report
+          echo "## Metrics" > report.md
+          # cat metrics.txt >> report.md
+          
+          awk 'NR%4{print "    " $0}{print ""}' metrics.txt >> report.md
 
+          echo "## Confusion Matrix" >> report.md
+          echo "![](./conf_matrix.png)" >> report.md
           cml comment create report.md

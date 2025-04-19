@@ -1,7 +1,6 @@
 name: churn-imbalanced-dataset
 on: [push]
-permissions:
-  contents: write
+permissions:  write-all # Required for posting comments and reports
 
 jobs:
   run:

@@ -1,38 +1,26 @@
-name: churn_prediction
+name: churn-imbalanced-dataset
 on: [push]
-permissions: write-all # required for CML to post comments
+permissions: write-all
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-          
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.x'
+      - uses: iterative/setup-cml@v1
 
-      - name: Cache Python packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
-      - name: Install dependencies
+      - name: Prepare Environment
         run: |
+          # Your ML workflow goes here
           python -m pip install --upgrade pip
-          python -m venv .venv
-          source .venv/bin/activate
-          pip uninstall -y numpy scikit-learn imbalanced-learn
-          pip install numpy==1.23.5
-          pip install scikit-learn==1.2.2
-          pip install imbalanced-learn==0.10.1
           pip install -r requirements.txt
+          python script.py
 
       - name: Generate Report
         env:

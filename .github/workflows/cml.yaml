@@ -33,7 +33,7 @@ jobs:
       - name: Train model
         run: |
           source .venv/bin/activate
-          python path/to/scripts.py
+          python script.py
 
       - name: Write CML report
         env:

@@ -25,10 +25,19 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          # Upgrade pip
           python -m pip install --upgrade pip
+          # Install numpy first to ensure compatibility with scikit-learn
+          pip install numpy>=1.17.3,<1.24.0
+          # Install other dependencies
           pip install -r requirements.txt
         env:
           CXX: g++ # Ensures correct C++ compiler is used for sklearn and Cython compilation issues
+
+      - name: Verify Installed Packages
+        run: |
+          # Print installed packages for debugging
+          pip list
 
       - name: Run ML Workflow Script
         run: |

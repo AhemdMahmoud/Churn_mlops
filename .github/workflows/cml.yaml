@@ -33,14 +33,14 @@ jobs:
       - name: Train model
         run: |
           source .venv/bin/activate
-          python scripts.py
+          python path/to/scripts.py
 
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "## Churn Prediction Report" > report.md
-          cat metrics.txt >> report.md
+          cat metrics.txt >> report.md 
 
           echo "\n## Model Performance" >> report.md
           if [ -f conf_matrix.png ]; then
